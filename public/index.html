@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        main{
+            font-family: 'Times New Roman', Times, serif;
+        }
+      #intro{
+        background-image: url(images/damaged-cement-wall-texture.jpg);
+        background-size:cover;
+        background-position: center;
+        display: flex;
+        justify-content: space-between;
+        padding:20px 60px;
+      }
+      #introText>p{
+            font-size: 80px;
+            margin: 0px;
+            height: 300px;
+      }
+      #portrait{
+        height: 400px;
+      }
+      
+
+      @media screen and (max-width: 768px) {
+
+#intro{
+flex-wrap: wrap-reverse;
+width: 100%;
+justify-content: space-around;
+text-align: center;
+}
+#portrait{
+    width: 80vw;
+    height: auto;
+}
+
+#introText>p{
+            font-size: 80px;
+      }
+}
+    
+    </style>
+</head>
+<body>
+    <nav id="headerNav" class="navbar">
+        <a href="/" class="logo">Anantveer Singh</a>
+        <ul id="hamMenu"> 
+            <li><a href="/">home</a></li>
+            <li><a href="/about">about</a></li>
+            <li><a href="/project">project</a></li>
+        </ul>
+        <img src="images/ham.png" alt="/=/" id="ham">
+    </nav>
+    
+    <main>
+        <div id="intro">
+            <div id="introText">
+            <p><i>Hi! I am</i><br>
+            Anantveer Singh</p>
+            <h1>Artist,Coder,Shooter</h1>
+        </div>
+            <img id="portrait"src="images/ChatGPT31.png" alt="introImg">
+        </div>
+        <div id="adSpace">
+            <!--ads go here-->
+        </div>
+    </main>
+    
+    <footer>
+        <nav id="footerNav" class="navbar">
+            <a href="/" class="logo">Anantveer Singh</a>
+            <ul id="hamMenu"> 
+                <li><a href="/">home</a></li>
+                <li><a href="/about">about</a></li>
+                <li><a href="/project">project</a></li>
+            </ul>
+            
+        </nav>
+        <div id="socialSide">
+            <div id="social">
+                <a href="https://pinterest.com/anantphaguwala/" target="_blank"><img src="images/pinterest.png" alt="pinterest"></a>
+                <a href="https://www.instagram.com/anant_phaguwala/" target="_blank"><img src="images/insta.png" alt="insta"></a>
+                <a href="https://x.com/anantveers895" target="_blank"><img src="images/twitter.png" alt="twitter"></a>
+                <a href="mailto:anantphaguwala@gmail.com" ><img src="images/email.png" alt="&#9993; anantphaguwala@gmail.com"></a>
+            </div>
+            <p>made with &#10084; by Anantveer Singh</p>
+        </div>
+        <p>© 2025 Anantveer Singh. All rights reserved. </p>
+    </footer>
+</body>
+<script src="script.js"></script>
+</html>

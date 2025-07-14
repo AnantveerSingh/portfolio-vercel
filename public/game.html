@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Space Block Shooter</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    h1{
+      position: fixed;
+      bottom: 0px;
+      font-size: 14px;
+      left: 0px;
+    }
+    canvas {
+      display: block;
+      background-color: #111;
+    }
+    #scoreBoard {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      display: none;
+    }
+    #gameOver, #startScreen {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      background: rgba(0,0,0,0.8);
+      padding: 20px 40px;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      text-align: center;
+    }
+    #gameOver button, #startScreen button {
+      margin-top: 12px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" tabindex="1"></canvas>
+  <div id="scoreBoard">Hits: 0 | High Score: 0</div>
+  <h1>made by Anantveer Singh <a href="/">go to home</a></h1>
+  <div id="startScreen">
+    <div>Welcome to Space Block Shooter</div>
+    <button onclick="startGame()">Start Game</button>
+  </div>
+
+  <div id="gameOver" style="display: none;">
+    <div id="finalScore"></div>
+    <button onclick="restartGame()">Play Again</button>
+  </div>
+
+  <audio id="bulletSound" src="audio/bullet.mp3" preload="auto"></audio>
+  <audio id="hitSound" src="audio/target.mp3" preload="auto"></audio>
+  <audio id="gameOverSound" src="audio/gameOver.mp3" preload="auto"></audio>
+  <audio id="bgMusic" src="audio/relaxing-guitar-loop.mp3" preload="auto" loop></audio>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreBoard = document.getElementById("scoreBoard");
+    const gameOverDisplay = document.getElementById("gameOver");
+    const startScreen = document.getElementById("startScreen");
+    const finalScore = document.getElementById("finalScore");
+    const bulletSound = document.getElementById("bulletSound");
+    const hitSound = document.getElementById("hitSound");
+    const gameOverSound = document.getElementById("gameOverSound");
+    const bgMusic = document.getElementById("bgMusic");
+    const blockImage = new Image();
+    blockImage.src = "images/block.png";
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let hits = 0;
+    let highScore = localStorage.getItem("highScore") || 0;
+    let isGameOver = false;
+    let gameStarted = false;
+
+    const shooterImage = new Image();
+    shooterImage.src = "images/shooter.png";
+
+    const gun = {
+      x: canvas.width / 2 - 25,
+      y: canvas.height - 60,
+      width: 50,
+      height: 50,
+      speed: 8
+    };
+
+    const bullets = [];
+    const blocks = [];
+    let blockSpeed = 1;
+    let blockInterval = 2000;
+
+    const keys = {};
+    window.addEventListener("keydown", (e) => keys[e.code] = true);
+    window.addEventListener("keyup", (e) => keys[e.code] = false);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && !isGameOver && gameStarted) {
+        bulletSound.currentTime = 0;
+        bulletSound.play();
+        bullets.push({
+          x: gun.x + gun.width / 2 - 2,
+          y: gun.y,
+          width: 4,
+          height: 10,
+          speed: 6
+        });
+      }
+    });
+
+    function spawnBlock() {
+      if (isGameOver) return;
+      blocks.push({
+        x: Math.random() * (canvas.width - 30),
+        y: -30,
+        width: 30,
+        height: 30,
+        speed: blockSpeed
+      });
+    }
+
+    let spawnTimer;
+
+    function drawGun() {
+      ctx.drawImage(shooterImage, gun.x, gun.y, gun.width, gun.height);
+    }
+
+    function drawBullets() {
+      ctx.fillStyle = "#0ff";
+      bullets.forEach((bullet, index) => {
+        bullet.y -= bullet.speed;
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+        if (bullet.y < 0) bullets.splice(index, 1);
+      });
+    }
+
+    function drawBlocks() {
+      ctx.fillStyle = "#f00";
+      blocks.forEach((block, bIndex) => {
+        block.y += block.speed;
+        ctx.drawImage(blockImage,block.x, block.y, block.width, block.height);
+
+        bullets.forEach((bullet, i) => {
+          if (
+            bullet.x < block.x + block.width &&
+            bullet.x + bullet.width > block.x &&
+            bullet.y < block.y + block.height &&
+            bullet.y + bullet.height > block.y
+          ) {
+            bullets.splice(i, 1);
+            blocks.splice(bIndex, 1);
+            hitSound.currentTime = 0;
+            hitSound.play();
+            hits++;
+            scoreBoard.textContent = `Hits: ${hits} | High Score: ${highScore}`;
+
+            blockSpeed *= 1;
+            blockInterval *= 1;
+            clearInterval(spawnTimer);
+            spawnTimer = setInterval(spawnBlock, blockInterval);
+          }
+        });
+
+        if (block.y + block.height >= gun.y) {
+          isGameOver = true;
+          clearInterval(spawnTimer);
+          gameOverSound.play();
+          bgMusic.pause();
+          finalScore.innerHTML = `Game Over<br>Score: ${hits}`;
+          if (hits > highScore) {
+            highScore = hits;
+            localStorage.setItem("highScore", highScore);
+            finalScore.innerHTML += `<br>🎉 New High Score!`;
+          }
+          scoreBoard.textContent = `Hits: ${hits} | High Score: ${highScore}`;
+          gameOverDisplay.style.display = 'block';
+        }
+      });
+    }
+
+    function update() {
+      if (isGameOver || !gameStarted) return;
+
+      if (keys["ArrowLeft"] || keys["KeyA"]) gun.x -= gun.speed;
+      if (keys["ArrowRight"] || keys["KeyD"]) gun.x += gun.speed;
+
+      if (gun.x < 0) gun.x = 0;
+      if (gun.x + gun.width > canvas.width) gun.x = canvas.width - gun.width;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawGun();
+      drawBullets();
+      drawBlocks();
+
+      requestAnimationFrame(update);
+    }
+
+    function startGame() {
+      gameStarted = true;
+      startScreen.style.display = 'none';
+      scoreBoard.style.display = 'block';
+      spawnTimer = setInterval(spawnBlock, blockInterval);
+      bgMusic.currentTime = 0;
+      bgMusic.play();
+      update();
+    }
+
+    function restartGame() {
+      hits = 0;
+      blockSpeed = 1;
+      blockInterval = 2000;
+      bullets.length = 0;
+      blocks.length = 0;
+      isGameOver = false;
+      scoreBoard.textContent = `Hits: 0 | High Score: ${highScore}`;
+      gameOverDisplay.style.display = 'none';
+      clearInterval(spawnTimer);
+      spawnTimer = setInterval(spawnBlock, blockInterval);
+      bgMusic.currentTime = 0;
+      bgMusic.play();
+      update();
+    }
+
+    shooterImage.onload = () => {
+      scoreBoard.textContent = `Hits: 0 | High Score: ${highScore}`;
+    };
+  </script>
+</body>
+</html>

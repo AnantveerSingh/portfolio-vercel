@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>anantveer JSON card</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      main {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        font-family: 'Courier New', monospace;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+  
+      #card-window {
+        background: #2d2d2d;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        max-width: 800px;
+        width: 100%;
+        padding: 0;
+      }
+  
+      .card-header {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        background-color: #1a1a1a;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+  
+      .circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 6px;
+      }
+  
+      .red { background-color: #ff5f56; }
+      .yellow { background-color: #ffbd2e; }
+      .green { background-color: #27c93f; }
+  
+      .filename {
+        margin-left: 10px;
+        color: #ccc;
+        font-weight: bold;
+        font-size: 14px;
+      }
+  
+      .json-container {
+        padding: 16px;
+        font-size: 16px;
+      }
+  
+      .line {
+        display: flex;
+        align-items: flex-start;
+      }
+  
+      .indent {
+        width: 20px;
+        flex-shrink: 0;
+      }
+  
+      .json-key {
+        color: #ce9178;
+        min-width: 180px;
+        display: inline-block;
+        white-space: nowrap;
+      }
+  
+      .json-value {
+        color: #dcdcaa;
+        word-break: break-word;
+        flex: 1;
+      }
+  
+      .bracket {
+        color: #fff;
+      }
+  
+      @media (max-width: 600px) {
+        .json-key {
+          min-width: 130px;
+        }
+        .json-container {
+          font-size: 14px;
+        }
+      }
+    </style>
+</head>
+<body>
+    <nav id="headerNav" class="navbar">
+        <a href="/" class="logo">Anantveer Singh</a>
+        <ul id="hamMenu"> 
+            <li><a href="/">home</a></li>
+            <li><a href="/about">about</a></li>
+            <li><a href="/project">project</a></li>
+        </ul>
+        <img src="images/ham.png" alt="/=/" id="ham">
+    </nav>
+    
+    <main>
+      <div id="card-window">
+        <div class="card-header">
+          <div class="circle red"></div>
+          <div class="circle yellow"></div>
+          <div class="circle green"></div>
+          <span class="filename">aboutMe.json</span>
+        </div>
+    
+        <div class="json-container">
+          <div class="line"><span class="bracket">{</span></div>
+    
+          <div class="line"><span class="indent"></span><span class="json-key">"bioData"</span>: <span class="bracket">{</span></div>
+    
+          <div class="line"><span class="indent"></span><span class="indent"></span><span class="json-key">"name"</span>: <span class="json-value">"Anantveer Singh",</span></div>
+          <div class="line"><span class="indent"></span><span class="indent"></span><span class="json-key">"profession"</span>: <span class="json-value">"Student",</span></div>
+          <div class="line"><span class="indent"></span><span class="indent"></span><span class="json-key">"dob"</span>: <span class="json-value">"12 August 2006",</span></div>
+          <div class="line"><span class="indent"></span><span class="indent"></span><span class="json-key">"gender"</span>: <span class="json-value">"Male"</span></div>
+    
+          <div class="line"><span class="indent"></span><span class="bracket">},</span></div>
+    
+          <div class="line"><span class="indent"></span><span class="json-key">"qualifications"</span>: <span class="bracket">{</span></div>
+    
+          <div class="line">
+            <span class="indent"></span><span class="indent"></span>
+            <span class="json-key">"matriculation"</span>: 
+            <span class="json-value">"General Gurnam Singh Public School, Sangrur (Punjab, India)",</span>
+          </div>
+    
+          <div class="line">
+            <span class="indent"></span><span class="indent"></span>
+            <span class="json-key">"seniorSecondary"</span>: 
+            <span class="json-value">"General Gurnam Singh Public School, Sangrur (Punjab, India)",</span>
+          </div>
+    
+          <div class="line">
+            <span class="indent"></span><span class="indent"></span>
+            <span class="json-key">"bTech"</span>: 
+            <span class="json-value">""</span>
+          </div>
+    
+          <div class="line"><span class="indent"></span><span class="bracket">}</span></div>
+          <div class="line"><span class="bracket">}</span></div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+        <nav id="footerNav" class="navbar">
+            <a href="/" class="logo">Anantveer Singh</a>
+            <ul id="hamMenu"> 
+                <li><a href="/">home</a></li>
+                <li><a href="/about">about</a></li>
+                <li><a href="/project">project</a></li>
+            </ul>
+            
+        </nav>
+        <div id="socialSide">
+          <div id="social">
+            <a href="https://pinterest.com/anantphaguwala/" target="_blank"><img src="images/pinterest.png" alt="pinterest"></a>
+            <a href="https://www.instagram.com/anant_phaguwala/" target="_blank"><img src="images/insta.png" alt="insta"></a>
+            <a href="https://x.com/anantveers895" target="_blank"><img src="images/twitter.png" alt="twitter"></a>
+            <a href="mailto:anantphaguwala@gmail.com" ><img src="images/email.png" alt="&#9993; anantphaguwala@gmail.com"></a>
+        </div>
+            <p>made with &#10084; by Anantveer Singh</p>
+        </div>
+        <p>© 2025 Anantveer Singh. All rights reserved. </p>
+    </footer>
+</body>
+<script src="script.js"></script>
+</html>

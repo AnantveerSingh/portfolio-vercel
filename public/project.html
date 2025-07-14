@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>project</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      main{
+        padding:20px 60px;
+        background-color: whitesmoke;
+        font-size: 20px;
+      }
+      ul{
+        padding: 0;
+      }
+      li{
+        list-style: none;
+        padding-bottom: 20px;
+      }
+      li>a{
+        text-decoration: none;
+        
+      }
+      #gameConsole{
+        background-image: url("images/g.png");
+        background-size: contain ;
+        background-repeat: no-repeat;
+        height: 600px;
+        width: auto;
+        margin: none;
+      }
+      #gameFrame{
+        position: relative;
+        left: 25px;
+        top: 50px;
+        height: 250px;
+        width: 310px;
+        border-radius: 20px;
+      }
+      #instructions{
+        color: green;
+        position: relative;
+        top: 40px;
+        width: 300px;
+        left:20px;
+      }
+      @media screen and (max-width: 400px){
+        main{
+          padding: 10px 20px;
+        }
+        #gameConsole{
+          width: 260px;
+        }
+        #gameFrame{
+          left: 20px;
+          top: 30px;
+          width: 240px;
+          height: 200px;
+        }
+        #instructions{
+          top: 20px;
+          width: 220px;
+          font-size: 16px;
+        }
+      }
+    </style>
+</head>
+<body>
+    <nav id="headerNav" class="navbar">
+        <a href="/" class="logo">Anantveer Singh</a>
+        <ul id="hamMenu"> 
+            <li><a href="/">home</a></li>
+            <li><a href="/about">about</a></li>
+            <li><a href="/project">project</a></li>
+        </ul>
+        <img src="images/ham.png" alt="/=/" id="ham">
+    </nav>
+    
+    <main>
+        <ul>
+            <li><a href="/jsonCard">JSON Card BioData</a> </li>
+            <li><a href="game">JS Game</a></li>
+        </ul>
+        <div id="gameConsole">
+        <iframe id="gameFrame" src="game.html" frameborder="0" h1{'display':'none'}></iframe>
+        <p id="instructions">use spaceBar to shoot and arrow keys to move</p>
+    </div>
+        <div id="adSpace">
+            <!--ads go here-->
+        </div>
+    </main>
+    
+    <footer>
+        <nav id="footerNav" class="navbar">
+            <a href="/" class="logo">Anantveer Singh</a>
+            <ul id="hamMenu"> 
+                <li><a href="/">home</a></li>
+                <li><a href="/about">about</a></li>
+                <li><a href="/project">project</a></li>
+            </ul>
+            
+        </nav>
+        <div id="socialSide">
+          <div id="social">
+            <a href="https://pinterest.com/anantphaguwala/" target="_blank"><img src="images/pinterest.png" alt="pinterest"></a>
+            <a href="https://www.instagram.com/anant_phaguwala/" target="_blank"><img src="images/insta.png" alt="insta"></a>
+            <a href="https://x.com/anantveers895" target="_blank"><img src="images/twitter.png" alt="twitter"></a>
+            <a href="mailto:anantphaguwala@gmail.com" ><img src="images/email.png" alt="&#9993; anantphaguwala@gmail.com"></a>
+        </div>
+            <p>made with &#10084; by Anantveer Singh</p>
+        </div>
+        <p>© 2025 Anantveer Singh. All rights reserved. </p>
+    </footer>
+</body>
+<script src="script.js"></script>
+<script>
+  function checkViewportWidth() {
+    if (window.innerWidth <= 768 ) {
+      alert("connect keyboard to play game");
+    }
+  }
+
+  // Run on page load
+  window.addEventListener("load", checkViewportWidth);
+
+  // Optional: Run on window resize
+  window.addEventListener("resize", checkViewportWidth);
+
+  
+</script>
+
+</html>

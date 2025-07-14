@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      main{
+        font-size: 20px;}
+        #portrait{
+            height:400px;
+            width: max-content;
+            padding-right:20px;
+            background-color: whitesmoke;
+            border-radius: 120px;
+        }
+        #aboutHero{
+            display: flex;
+            flex-flow: row;
+            padding:20px 60px;
+            background-image: url("images/metal-texture-with-dust-scratches-cracks-textured-backgrounds.jpg");
+            background-size: cover;
+            background-position: center;
+            justify-content: space-between;
+        }
+        #aboutHero>pre>b{
+            font-size: 40px;
+        }
+        pre{
+            white-space: pre-wrap;
+        }
+              
+
+        @media screen and (max-width: 768px){
+
+            #portrait{
+                padding:0;
+                align-self: center;
+            }
+            #aboutHero{
+                flex-flow: column;
+                padding: 20px;
+                        }
+            #aboutHero>pre>b{
+            font-size: 30px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <nav id="headerNav" class="navbar">
+        <a href="/" class="logo">Anantveer Singh</a>
+        <ul id="hamMenu"> 
+            <li><a href="/">home</a></li>
+            <li><a href="/about">about</a></li>
+            <li><a href="/project">project</a></li>
+        </ul>
+        <img src="images/ham.png" alt="/=/" id="ham">
+    </nav>
+    
+    <main>
+        <div id="aboutHero">
+            <img id="portrait" src="images/portrait.png" alt="portrait">
+            <pre>
+<b><i>bioData:	</i></b>
+<i>name</i>:	Anantveer Singh
+<i>profession</i>:	Student
+<i>dob</i>:	12 August 2006
+<i>gender</i>:	Male
+<b><i>qualifications:	</i></b>
+<i>matriculation</i>:	General Gurnam Singh Public School,
+ Sangrur (Punjab, India)
+<i>seniorSecondary</i>:	General Gurnam Singh Public School,
+ Sangrur (Punjab, India)
+<i>bTech</i>:	xyz
+            </pre>
+        </div>
+        <div id="adSpace">
+            <!--ads go here-->
+        </div>
+    </main>
+    
+    <footer>
+        <nav id="footerNav" class="navbar">
+            <a href="/" class="logo">Anantveer Singh</a>
+            <ul id="hamMenu"> 
+                <li><a href="/">home</a></li>
+                <li><a href="/about">about</a></li>
+                <li><a href="/project">project</a></li>
+            </ul>
+            
+        </nav>
+        <div id="socialSide">
+            <div id="social">
+                <a href="https://pinterest.com/anantphaguwala/" target="_blank"><img src="images/pinterest.png" alt="pinterest"></a>
+                <a href="https://www.instagram.com/anant_phaguwala/" target="_blank"><img src="images/insta.png" alt="insta"></a>
+                <a href="https://x.com/anantveers895" target="_blank"><img src="images/twitter.png" alt="twitter"></a>
+                <a href="mailto:anantphaguwala@gmail.com" ><img src="images/email.png" alt="&#9993; anantphaguwala@gmail.com"></a>
+            </div>
+            <p>made with &#10084; by Anantveer Singh</p>
+        </div>
+        <p>© 2025 Anantveer Singh. All rights reserved. </p>
+    </footer>
+</body>
+<script src="script.js"></script>
+</html>

@@ -1,0 +1,12 @@
+{
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/about", "dest": "/about.html" },
+    { "src": "/project", "dest": "/project.html" },
+    { "src": "/game", "dest": "/game.html" },
+    { "src": "/jsonCard", "dest": "/jsonCard.html" },
+    { "handle": "filesystem" },
+    { "src": "/.*", "status": 404, "dest": "/404.html" }
+  ]
+}
+

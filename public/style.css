@@ -1,0 +1,142 @@
+body{
+    margin: 0px;
+    padding:0px;
+    font-family: monospace;
+    overflow-x: hidden;
+}  
+a{
+    text-decoration: none;
+    
+}
+
+.logo{
+    padding: 20px 0 20px 0;
+    height: 20px;
+    font-size:20px;
+    width: auto;
+    color: black;
+    }
+.navbar>ul{
+    display: flex;
+    flex-flow: row;
+    padding: 20px 0 20px 0;
+    margin:0px;
+}
+.navbar>ul>li{
+    list-style: none;
+    font-size: 20px;
+}
+.navbar>ul>li>a{
+    padding-bottom: 14px;
+    color: black;
+}
+.navbar>ul>li>a:hover{
+    border-bottom: 3px solid black;
+}
+
+#headerNav{
+    display: flex;
+    flex-flow:row;
+    height: 60px;
+    padding:0 60px 0 60px;
+    background-color:white;
+    justify-content: space-between;
+}
+#headerNav>ul>li{
+    padding-left: 20px;
+}
+#ham{
+    display: none;
+    position: relative;
+    height: 20px;
+    top: 20px;
+}
+#adSpace{
+    background-color: whitesmoke;
+    margin: 60px;
+    border: 3px dashed black;
+    height: 400px;
+}
+footer{
+    padding: 10px 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#footerNav{
+    display: flex;
+    flex-flow: column;
+    height: fit-content;
+    width: 50%;
+    padding: 00px;
+    
+}
+#footerNav>ul{
+    width: fit-content;
+}
+#footerNav>ul>li{
+    padding-right: 20px;
+}
+#socialSide{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+#socialSide>p{
+    font-size:20px;
+    text-align: right;
+}
+#social{
+    display: flex;
+    padding-top: 10px;
+    justify-content:right;
+}
+#social>a>img{
+    height: 40px;
+    padding-left: 20px;
+}
+
+@media screen and (max-width:768px) {
+    #footerNav,#socialSide{
+        width: 100%;
+    } 
+    #footerNav>ul{
+        display: none;
+    }
+    #social{
+        justify-content:left;
+    }
+    #socialSide>p{
+        text-align: left;
+    }
+    #social>a>img{
+        padding-left: 0;
+        padding-right: 20px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .navbar>ul{
+        flex-flow: column;
+        padding: 0px;
+    }
+
+    #ham{
+        display: block;
+    }
+    #headerNav>ul{
+        background-color: whitesmoke;
+        position: fixed;
+        top: 60px;
+        right:0px;
+        display: none;
+    }
+    #headerNav>ul>li{
+        padding: 20px;
+        width:100px;
+    }
+    /*if need of footer nav in tablet view*/
+    /* #footerNav>ul>li{
+        padding: 10px 0px 10px 0px;
+    } */
+}
