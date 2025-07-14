@@ -54,6 +54,7 @@ a{
 #adSpace{
     background-color: whitesmoke;
     margin: 60px;
+    display:important;
     border: 3px dashed black;
     height: 400px;
 }
