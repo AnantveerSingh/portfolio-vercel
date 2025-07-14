@@ -70,6 +70,28 @@
   <audio id="bgMusic" src="audio/relaxing-guitar-loop.mp3" preload="auto" loop></audio>
 
   <script>
+    // Handle messages from parent window
+window.addEventListener("message", function (event) {
+  const data = event.data;
+  if (data?.type === "virtualKey") {
+    // Update your keys object just like real keypress
+    keys[data.code] = data.pressed;
+
+    // Optional: trigger shooting if space was "pressed"
+    if (data.code === "Space"  && data.pressed && !isGameOver && gameStarted) {
+      bulletSound.currentTime = 0;
+      bulletSound.play();
+      bullets.push({
+        x: gun.x + gun.width / 2 - 2,
+        y: gun.y,
+        width: 4,
+        height: 10,
+        speed: 6
+      });
+    }
+  }
+});
+
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     const scoreBoard = document.getElementById("scoreBoard");
@@ -108,6 +130,7 @@
     let blockInterval = 2000;
 
     const keys = {};
+    
     window.addEventListener("keydown", (e) => keys[e.code] = true);
     window.addEventListener("keyup", (e) => keys[e.code] = false);
 
@@ -241,6 +264,7 @@
     shooterImage.onload = () => {
       scoreBoard.textContent = `Hits: 0 | High Score: ${highScore}`;
     };
+
   </script>
 </body>
 </html>
