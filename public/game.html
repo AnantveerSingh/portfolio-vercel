@@ -252,19 +252,30 @@ window.addEventListener("message", function (event) {
     }
 
     function positionControls() {
-      if (!isMobile() || isInIframe) {
-        gameControls.style.display = "none";
-        return;
-      }
+  const h1 = document.querySelector("h1");
 
-      const rect = canvas.getBoundingClientRect();
-      const offsetTop = rect.bottom + 10;
+  if (isInIframe) {
+    gameControls.style.display = "none";
+    if (h1) h1.style.display = "none";
+    return;
+  }
 
-      gameControls.style.top = `${offsetTop}px`;
-      gameControls.style.left = `0px`;
-      gameControls.style.width = `100%`;
-      gameControls.style.display = "flex";
-    }
+  if (!isMobile()) {
+    gameControls.style.display = "none";
+    if (h1) h1.style.display = "block";
+    return;
+  }
+
+  const rect = canvas.getBoundingClientRect();
+  const offsetTop = rect.bottom + 10;
+
+  gameControls.style.top = `${offsetTop}px`;
+  gameControls.style.left = `0px`;
+  gameControls.style.width = `100%`;
+  gameControls.style.display = "flex";
+  if (h1) h1.style.display = "block";
+}
+
 
     function startGame() {
       gameStarted = true;
