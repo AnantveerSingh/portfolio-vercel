@@ -12,7 +12,7 @@
       color: #fff;
       font-family: sans-serif;
     }
-    h1{
+    h1 {
       position: fixed;
       bottom: 0px;
       font-size: 10px;
@@ -48,6 +48,36 @@
       font-size: 16px;
       cursor: pointer;
     }
+    #gameControls {
+      position: absolute;
+      z-index: 10;
+      display: none;
+      justify-content: center;
+      gap: 100px;
+      padding: 10px;
+    }
+    #move>button{
+      background-color: green;
+    }
+    
+    #gameControls>button{
+      background-color: red;
+    }
+    #gameControls > button, #move > button {
+      height: 40px;
+      width: 40px;
+      font-size: 14px;
+      border: none;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      #gameControls {
+        flex-direction: row;
+      }
+    }
   </style>
 </head>
 <body>
@@ -58,10 +88,16 @@
     <div>Welcome to Space Block Shooter</div>
     <button onclick="startGame()">Start Game</button>
   </div>
-
   <div id="gameOver" style="display: none;">
     <div id="finalScore"></div>
     <button onclick="restartGame()">Play Again</button>
+  </div>
+  <div id="gameControls">
+    <div id="move">
+      <button onmousedown="setKey('ArrowLeft', true)" onmouseup="setKey('ArrowLeft', false)" ontouchstart="setKey('ArrowLeft', true)" ontouchend="setKey('ArrowLeft', false)">←</button>
+      <button onmousedown="setKey('ArrowRight', true)" onmouseup="setKey('ArrowRight', false)" ontouchstart="setKey('ArrowRight', true)" ontouchend="setKey('ArrowRight', false)">→</button>
+    </div>
+    <button onmousedown="setKey('Space', true)" onmouseup="setKey('Space', false)" ontouchstart="setKey('Space', true)" ontouchend="setKey('Space', false)">␣</button>
   </div>
 
   <audio id="bulletSound" src="audio/bullet.mp3" preload="auto"></audio>
@@ -74,11 +110,10 @@
 window.addEventListener("message", function (event) {
   const data = event.data;
   if (data?.type === "virtualKey") {
-    // Update your keys object just like real keypress
     keys[data.code] = data.pressed;
 
-    // Optional: trigger shooting if space was "pressed"
-    if (data.code === "Space"  && data.pressed && !isGameOver && gameStarted) {
+    // Fire bullet if needed
+    if (data.code === "Space" && data.pressed && !isGameOver && gameStarted) {
       bulletSound.currentTime = 0;
       bulletSound.play();
       bullets.push({
@@ -92,6 +127,8 @@ window.addEventListener("message", function (event) {
   }
 });
 
+    const isInIframe = window !== window.parent;
+    const isMobile = () => window.innerWidth <= 768;
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     const scoreBoard = document.getElementById("scoreBoard");
@@ -102,23 +139,20 @@ window.addEventListener("message", function (event) {
     const hitSound = document.getElementById("hitSound");
     const gameOverSound = document.getElementById("gameOverSound");
     const bgMusic = document.getElementById("bgMusic");
+    const gameControls = document.getElementById("gameControls");
+
     const blockImage = new Image();
     blockImage.src = "images/block.png";
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let hits = 0;
-    let highScore = localStorage.getItem("highScore") || 0;
-    let isGameOver = false;
-    let gameStarted = false;
-
     const shooterImage = new Image();
     shooterImage.src = "images/shooter.png";
 
+    let mobileControlHeight = 100;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - (isMobile() && !isInIframe ? mobileControlHeight : 0);
+
     const gun = {
       x: canvas.width / 2 - 25,
-      y: canvas.height - 60,
+      y: canvas.height - 80,
       width: 50,
       height: 50,
       speed: 8
@@ -126,40 +160,28 @@ window.addEventListener("message", function (event) {
 
     const bullets = [];
     const blocks = [];
+    const keys = {};
+    let hits = 0;
+    let highScore = localStorage.getItem("highScore") || 0;
+    let isGameOver = false;
+    let gameStarted = false;
     let blockSpeed = 1;
     let blockInterval = 2000;
+    let spawnTimer;
 
-    const keys = {};
-    
-    window.addEventListener("keydown", (e) => keys[e.code] = true);
-    window.addEventListener("keyup", (e) => keys[e.code] = false);
-
-    window.addEventListener("keydown", (e) => {
-      if (e.code === "Space" && !isGameOver && gameStarted) {
+    function setKey(code, pressed) {
+      keys[code] = pressed;
+      if (code === "Space" && pressed && !isGameOver && gameStarted) {
         bulletSound.currentTime = 0;
         bulletSound.play();
-        bullets.push({
-          x: gun.x + gun.width / 2 - 2,
-          y: gun.y,
-          width: 4,
-          height: 10,
-          speed: 6
-        });
+        bullets.push({ x: gun.x + gun.width / 2 - 2, y: gun.y, width: 4, height: 10, speed: 6 });
       }
-    });
+    }
 
     function spawnBlock() {
       if (isGameOver) return;
-      blocks.push({
-        x: Math.random() * (canvas.width - 30),
-        y: -30,
-        width: 30,
-        height: 30,
-        speed: blockSpeed
-      });
+      blocks.push({ x: Math.random() * (canvas.width - 30), y: -30, width: 30, height: 30, speed: blockSpeed });
     }
-
-    let spawnTimer;
 
     function drawGun() {
       ctx.drawImage(shooterImage, gun.x, gun.y, gun.width, gun.height);
@@ -178,8 +200,7 @@ window.addEventListener("message", function (event) {
       ctx.fillStyle = "#f00";
       blocks.forEach((block, bIndex) => {
         block.y += block.speed;
-        ctx.drawImage(blockImage,block.x, block.y, block.width, block.height);
-
+        ctx.drawImage(blockImage, block.x, block.y, block.width, block.height);
         bullets.forEach((bullet, i) => {
           if (
             bullet.x < block.x + block.width &&
@@ -193,11 +214,6 @@ window.addEventListener("message", function (event) {
             hitSound.play();
             hits++;
             scoreBoard.textContent = `Hits: ${hits} | High Score: ${highScore}`;
-
-            blockSpeed *= 1;
-            blockInterval *= 1;
-            clearInterval(spawnTimer);
-            spawnTimer = setInterval(spawnBlock, blockInterval);
           }
         });
 
@@ -231,8 +247,23 @@ window.addEventListener("message", function (event) {
       drawGun();
       drawBullets();
       drawBlocks();
-
+      positionControls();
       requestAnimationFrame(update);
+    }
+
+    function positionControls() {
+      if (!isMobile() || isInIframe) {
+        gameControls.style.display = "none";
+        return;
+      }
+
+      const rect = canvas.getBoundingClientRect();
+      const offsetTop = rect.bottom + 10;
+
+      gameControls.style.top = `${offsetTop}px`;
+      gameControls.style.left = `0px`;
+      gameControls.style.width = `100%`;
+      gameControls.style.display = "flex";
     }
 
     function startGame() {
@@ -252,6 +283,8 @@ window.addEventListener("message", function (event) {
       bullets.length = 0;
       blocks.length = 0;
       isGameOver = false;
+      canvas.height = window.innerHeight - (isMobile() && !isInIframe ? mobileControlHeight : 0);
+      gun.y = canvas.height - 80;
       scoreBoard.textContent = `Hits: 0 | High Score: ${highScore}`;
       gameOverDisplay.style.display = 'none';
       clearInterval(spawnTimer);
@@ -265,6 +298,23 @@ window.addEventListener("message", function (event) {
       scoreBoard.textContent = `Hits: 0 | High Score: ${highScore}`;
     };
 
+    window.addEventListener("keydown", (e) => keys[e.code] = true);
+    window.addEventListener("keyup", (e) => keys[e.code] = false);
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && !isGameOver && gameStarted) {
+        bulletSound.currentTime = 0;
+        bulletSound.play();
+        bullets.push({ x: gun.x + gun.width / 2 - 2, y: gun.y, width: 4, height: 10, speed: 6 });
+      }
+    });
+
+    window.addEventListener("load", positionControls);
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight - (isMobile() && !isInIframe ? mobileControlHeight : 0);
+      gun.y = canvas.height - 80;
+      positionControls();
+    });
   </script>
 </body>
 </html>
