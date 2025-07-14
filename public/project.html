@@ -47,6 +47,35 @@
         width: 300px;
         left:20px;
       }
+      #leftBtn{
+        position: relative;
+        height: 30px;
+        width: 30px;
+        left: 30px;
+        top: 50px;
+        background-color: black;
+        color: aliceblue;
+        border-radius: 15px;
+      }
+      #rightBtn{
+        position: relative;
+        height: 30px;
+        width: 30px;
+        left: 50px;
+        top: 50px;
+        border-radius: 15px;
+        background-color: black;
+        color: aliceblue;
+      }#spaceBtn{
+        position: relative;
+        height: 30px;
+        width: 30px;
+        left: 220px;
+        top: 30px;
+        border-radius: 15px;
+        background-color: maroon;
+        color: aliceblue;
+      }
       @media screen and (max-width: 400px){
         main{
           padding: 10px 20px;
@@ -64,6 +93,18 @@
           top: 20px;
           width: 220px;
           font-size: 16px;
+        }
+        #rightBtn{
+          top: 0px;
+          left: 20px;
+        }
+        #leftBtn{
+          top: 0px;
+          left: 15px;
+        }
+        #spaceBtn{
+          top: -15px;
+          left: 125px;
         }
       }
     </style>
@@ -87,6 +128,34 @@
         <div id="gameConsole">
         <iframe id="gameFrame" src="game.html" frameborder="0" h1{'display':'none'}></iframe>
         <p id="instructions">use spaceBar to shoot and arrow keys to move</p>
+        <button id="leftBtn"
+  onmousedown="sendKey('ArrowLeft', true)" 
+  onmouseup="sendKey('ArrowLeft', false)"
+  ontouchstart="sendKey('ArrowLeft', true)"
+  ontouchend="sendKey('ArrowLeft', false)"
+>
+  ← 
+</button>
+
+<button id="rightBtn"
+  onmousedown="sendKey('ArrowRight', true)" 
+  onmouseup="sendKey('ArrowRight', false)"
+  ontouchstart="sendKey('ArrowRight', true)"
+  ontouchend="sendKey('ArrowRight', false)"
+>
+  → 
+</button>
+
+<button id="spaceBtn"
+  onmousedown="sendKey('Space', true)" 
+  onmouseup="sendKey('Space', false)"
+  ontouchstart="sendKey('Space', true)"
+  ontouchend="sendKey('Space', false)"
+>
+  ␣ 
+</button>
+
+        
     </div>
         <div id="adSpace">
             <!--ads go here-->
@@ -114,9 +183,12 @@
         </div>
         <p>© 2025 Anantveer Singh. All rights reserved. </p>
     </footer>
+    
+
+
 </body>
 <script src="script.js"></script>
-<script>
+<!-- <script>
   function checkViewportWidth() {
     if (window.innerWidth <= 768 ) {
       alert("connect keyboard to play game");
@@ -125,7 +197,18 @@
 
   // Run on page load
   window.addEventListener("load", checkViewportWidth);
+    
+</script> -->
+<script>
+  function sendKey(code, pressed) {
+  const iframe = document.getElementById("gameFrame");
+  iframe.contentWindow.postMessage({
+    type: "virtualKey",
+    code,
+    pressed
+  }, "*");
+}
+
 
 </script>
-
 </html>
